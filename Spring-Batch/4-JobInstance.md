@@ -111,8 +111,6 @@ public class UniqueRunIdIncrementer extends RunIdIncrementer {
 }
 ```
 
-[run.id](http://run.id) 가 DB에서 명시적으로 보이진않음
-
 <img width="766" alt="3" src="https://github.com/gilyeon00/TIL/assets/52391627/a5fea591-8380-408c-9ce3-b4d9ad50d40a">
 
 <img width="550" alt="4" src="https://github.com/gilyeon00/TIL/assets/52391627/044b8470-5370-48e4-bc47-0b75f0f365e3">
