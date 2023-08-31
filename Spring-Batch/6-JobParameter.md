@@ -6,7 +6,7 @@
 # JobParameter 생성 및 바인딩
 
 - 어플리케이션 실행 시 주입
-    - Java -jar LogBatch.job requestDate-20120824
+    - Java -jar spring-batch-example-0.0.1-SNAPSHOT.jar date=20210204
 - 코드로 생성
     - JobParmeterBuilder
     - DefaultJobParametersConverter
@@ -46,3 +46,26 @@ JobParametersBuilder 를 통해 JobParameters 를 생성 할 수 있다.
 - 똑같은 Job을 실행했을 때, 다른 parameter가 같아도 Date가 다르기때문에 JobInstance가 생성됨
 
 <img width="949" alt="7" src="https://github.com/gilyeon00/TIL/assets/52391627/c117b20e-97ac-47e9-b208-3603d3f923c6">
+
+
+### 🧐 이렇게 저장한 JobParameters 의 값은 어디서, 어떻게 참조할까?
+
+⇒ Step 단계에서 JobParameters 의 값을 참조한다.
+
+- `StepContribution`
+
+StepContribution → StepExecution → JobExecution → JobParameters
+
+JobParameters 로 반환됨      ← 우리가 얻고자 하는 결과
+
+<img width="946" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/ae16c183-a295-4b53-bfb4-97e5065f67f0">
+
+- `ChunkContext`
+
+ChunkContext → StepContext → StepExecution → JobExecution → JobParameters
+
+Map 으로 반환됨             ← JobParameters 로 반환되진 않기에, 나누자면 값만 확인하는 용도
+
+<img width="687" alt="2" src="https://github.com/gilyeon00/TIL/assets/52391627/be39c090-5d0b-46e3-b2fc-baef0a623370">
+
+<img width="422" alt="3" src="https://github.com/gilyeon00/TIL/assets/52391627/9aa1df93-eca8-43c5-a9dd-fcd9e7a23998">
