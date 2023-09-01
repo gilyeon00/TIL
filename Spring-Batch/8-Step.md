@@ -36,17 +36,17 @@
 
 ```jsx
 @Bean
-    public Step step1 () {
-        return stepBuilderFactory.get("step1")
-                .tasklet(new Tasklet() {
-                    @Override
-                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("------step1 has executed------");
-                        return RepeatStatus.FINISHED;
-                    }
-                })
-                .build();
+public Step step1 () {
+  return stepBuilderFactory.get("step1")
+          .tasklet(new Tasklet() {
+  @Override
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+      System.out.println("------step1 has executed------");
+      return RepeatStatus.FINISHED;
     }
+  })
+.build();
+}
 ```
 
 - myTasklet 이라는 Tasklet 직접 생성
@@ -55,9 +55,19 @@
     @Bean
         public Step step1 () {
             return stepBuilderFactory.get("step1")
-                    .tasklet(myTasklet())
+                    .tasklet(new CustomTasklet())
                     .build();
         }
+    ```
+
+    ```jsx
+    public class CustomTasklet implements Tasklet {
+        @Override
+        public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+            System.out.println("====== custom step2 was executed =========");
+            return RepeatStatus.FINISHED;
+        }
+    }
     ```
 
 
