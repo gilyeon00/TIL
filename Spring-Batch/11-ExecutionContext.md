@@ -22,4 +22,43 @@
 <img width="799" alt="2" src="https://github.com/gilyeon00/TIL/assets/52391627/20757c67-dbb8-4d90-9ffe-51c0cba7e3b4">
 
 
-<img width="875" alt="3" src="https://github.com/gilyeon00/TIL/assets/52391627/299acddf-5cd3-4969-8171-1d41e8bea262">
+
+# ExecutionContext 의 값을 공유함을 볼 수 있는 예제
+
+```jsx
+public class ExecutionContext3 implements Tasklet {
+    @Override
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+        // 실패한 데이터를 다시 활용할 수 있을 지 확인
+        System.out.println("=======execution context 3 ============");
+        Object name = chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().get("name");
+        if(name == null) {
+            chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("name", "user1");
+            throw new RuntimeException("step2 was failed");
+        }
+        return RepeatStatus.FINISHED;
+    }
+}
+```
+
+![1](https://github.com/gilyeon00/TIL/assets/52391627/c1c277bf-5adf-4f91-ae52-984cbb073c8a)
+
+- ExecutionContext3 에서, ExecutionContext의 name 키의 값을 가져올때, 없으면 값을 넣어주고 예외처리를 해준다.
+- 이는 다음 재 실행때, ExecutionContext3 에 이어 실행되는 ExecutionContext4에서 ExecutionContext에 저장한 name 값을 가져와서 사용할 수 있는 지에 대한 예제이다.
+
+```jsx
+public class ExecutionContext4 implements Tasklet {
+    @Override
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+        System.out.println("=======execution context 4 ============");
+        System.out.println("name :  " + chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().get("name"));
+
+        return RepeatStatus.FINISHED;
+    }
+}
+```
+
+![2](https://github.com/gilyeon00/TIL/assets/52391627/861bfdde-7fad-4267-8774-08d28833dc51)
+
+- 예상과 같이 재시작시, ExecutionContext3부터 시작되며 ExecutionContext4에서 공유된 값을 가져올 수 있음을 볼 수 있다.
+    ![3](https://github.com/gilyeon00/TIL/assets/52391627/cbe1cfd1-c50e-4436-836e-b02f28bf570f)
