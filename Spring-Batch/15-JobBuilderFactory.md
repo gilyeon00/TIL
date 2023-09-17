@@ -53,7 +53,7 @@ get(jobName) 을 통해 JobBuilderFactory 가 JobBuilder 를 생성한다.
             }
     ```
     
-### 🧐start 를 flow 로 하지 않고, 중간에 넣으면 에러가 발생한다.
+## 🧐start 를 flow 로 하지 않고, 중간에 넣으면 에러 발생
     
 ```java
     @Bean
@@ -80,9 +80,10 @@ get(jobName) 을 통해 JobBuilderFactory 가 JobBuilder 를 생성한다.
             return (JobExecutionDecider) flowBuilder.build();
         }
 ```
-    
-`.start(flow())`는 Flow를 Job의 시작 부분에서 실행하기 위한 방법이다.
-Flow를 시작 부분이 아닌 다른 위치에서 실행하려면 별도의 구성 방법이 필요하다.
-    
-⭐️ 결론은  `start()` 메서드는 시작점이기 때문에 Flow나 Step을 받을 수 있지만, `next()`는 `JobExecutionDecider`나 `Step`만을 받을 수 있다. 
-    Flow를 `next()`에 연결하려면, 해당 Flow를 다른 Step 또는 JobExecutionDecider로 감싸서 사용해야 한다.
+
+⭐️ start() 를 통해, **JobBuilderFactory** 가 SimpleJobBuilder 를 만들지, FlowJobBuilder 를 만들지 결정한다.
+start() 에 Step 을 전달할 경우 `SimpleJobBuilder` 가 만들어지는데, SimpleJobBuilder 는 무조건 step 만을 가져야하므로 에러가 난다.
+반면, `FlowJobBuilder` 같은 경우 step/flow 를 다 받을 수 있다.
+따라서, start() 에 Flow 를 전달하면 FlowJobBuilder 가 만들어지므로, next() 에 Step / Flow 아무거나 넣어도 무방하다.
+
+- SimpleJobBuilder 에서 Flow를 `next()`에 연결하려면, 해당 Flow를 다른 Step 또는 JobExecutionDecider로 감싸서 사용해야 한다.
