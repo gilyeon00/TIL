@@ -14,10 +14,10 @@
     ```
 
 - 모든 Step 의 실행이 성공적으로 완료되어야 Job 이 성공적으로 완료된다.
-    - 밑의 내용 확인해보기
     - JobBuilderFactory (JobBuilder 생성)
-      → JobBuilder (SimpleJobBuilder 생성)
-      → JobLauncher (Job 실행)
+    - → JobBuilder (SimpleJobBuilder 생성)
+      → SimpleJob 생성
+    - JobLauncher (SimpleJob + JobParameter 로 SimpleJob 실행)
       → SimpleJob (JobInstance 생성)
       → JobInstance (JobExecution 생성)
       → Step (StepExecution 생성)
@@ -32,10 +32,28 @@
 ```java
 @Bean
     public Job job () {
-        return jobBuilderFactory.get("my-job")
+        return jobBuilderFactory.get("my-job-a")
                 .start(step1())
                 .next(step2())
-								.incrementer(new RunIdIncrementer())
+                .incrementer(new RunIdIncrementer())
+                .preventRestart()
+                .validator(new JobParametersValidator() {
+                    @Override
+                    public void validate(JobParameters parameters) throws JobParametersInvalidException {
+
+                    }
+                })
+                .listener(new JobExecutionListener() {
+                    @Override
+                    public void beforeJob(JobExecution jobExecution) {
+                        
+                    }
+
+                    @Override
+                    public void afterJob(JobExecution jobExecution) {
+
+                    }
+                })
                 .build();
     }
 ```
@@ -47,10 +65,31 @@
     - start(Step)
     - 처음 실행 할 Step 설정
     - 이 메서드를 실행하면 `SimpleJobBuilder` 가 반환됨
+
+    ```java
+    public SimpleJobBuilder start(Step step) {
+    		if (steps.isEmpty()) {
+    			steps.add(step);
+    		}
+    		else {
+    			steps.set(0, step);
+    		}
+    		return this;
+    	}
+    ```
+
 - **next(step2())**
     - next(Step)
     - 다음에 실행 할 Step 설정 (개수는 무제한)
     - 모든 next() 의 Step 이 종료되면, Job 이 종료된다
+
+    ```java
+    public SimpleJobBuilder next(Step step) {
+    		steps.add(step);
+    		return this;
+    	}
+    ```
+
 - **incrementer(new RunIdIncrementer())**
     - incrementer(JobparmetersIncrementer)
     - JobParameter 의 값을 자동으로 증가해주는 JobparmetersIncrementer 설정
@@ -64,3 +103,62 @@
     - Job 이 실행이 되면, Job의 실행 전 or 후에 Listener 를 사용해서 콜백을 제공받을 수 있도록 JobExecutionListener 설정
 - **build();**
     - SimpleJob 생성
+
+    ```java
+    public Job build() {
+    		if (builder != null) {
+    			return builder.end().build();
+    		}
+    		SimpleJob job = new SimpleJob(getName());
+    		super.enhance(job);
+    		job.setSteps(steps);
+    		try {
+    			job.afterPropertiesSet();
+    		}
+    		catch (Exception e) {
+    			throw new JobBuilderException(e);
+    		}
+    		return job;
+    	}
+    ```
+
+    ```java
+    protected void enhance(Job target) {
+    
+    		if (target instanceof AbstractJob) {
+    
+    			AbstractJob job = (AbstractJob) target;
+    			job.setJobRepository(properties.getJobRepository());
+    
+    			JobParametersIncrementer jobParametersIncrementer = properties.getJobParametersIncrementer();
+    			if (jobParametersIncrementer != null) {
+    				job.setJobParametersIncrementer(jobParametersIncrementer);
+    			}
+    			JobParametersValidator jobParametersValidator = properties.getJobParametersValidator();
+    			if (jobParametersValidator != null) {
+    				job.setJobParametersValidator(jobParametersValidator);
+    			}
+    
+    			Boolean restartable = properties.getRestartable();
+    			if (restartable != null) {
+    				job.setRestartable(restartable);
+    			}
+    
+    			List<JobExecutionListener> listeners = properties.getJobExecutionListeners();
+    			if (!listeners.isEmpty()) {
+    				job.setJobExecutionListeners(listeners.toArray(new JobExecutionListener[0]));
+    			}
+    
+    		}
+    
+    	}
+    ```
+
+    - JobRepository, JobParametersIncrementer, JobParametersValidator, JobExecutionListener 와 같이 Job을 명세할 때 넣어놓은 프로퍼티 값들을 SimpleJob에 다시 저장해주는 역할
+
+    ```java
+    public void setSteps(List<Step> steps) {
+    		this.steps.clear();
+    		this.steps.addAll(steps);
+    	}
+    ```
