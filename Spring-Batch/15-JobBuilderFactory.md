@@ -23,14 +23,15 @@
 
 # JobBuilderFactory 의 시나리오
 
-![스크린샷 2023-09-21 오후 10.50.32.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/620a6d8c-eeac-4c90-b691-23b89fd6e153/3b7e14cb-7e7e-420d-986f-a216143b6e7f/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-09-21_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_10.50.32.png)
+<img width="786" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/45649a48-145b-4f55-baab-07c7b0d2f174">
 
 get(jobName) 을 통해 JobBuilderFactory 가 JobBuilder 를 생성한다.
 
 1. `SimpleJobBuilder`
     1. JobBuilder 가 start(step) 을 실행한다면, SimpleJobBuilder 를 생성
 
-       ![스크린샷 2023-09-21 오후 11.20.45.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/620a6d8c-eeac-4c90-b691-23b89fd6e153/deb538c5-a063-433a-a002-17bffd4f8283/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-09-21_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11.20.45.png)
+       <img width="461" alt="2" src="https://github.com/gilyeon00/TIL/assets/52391627/70e50312-cabd-4f99-a508-83891e449d8c">
+
 
 2. `FlowJobBuilder`
     1. JobBuilder 가 start(flow) 을 실행한다면, FlowJobBuilder 를 생성
@@ -39,7 +40,7 @@ get(jobName) 을 통해 JobBuilderFactory 가 JobBuilder 를 생성한다.
         1. FlowJobBuilder : Job 생성
         2. JobFlowBuilder : Flow 생성
 
-       ![스크린샷 2023-09-21 오후 11.21.09.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/620a6d8c-eeac-4c90-b691-23b89fd6e153/3f59ebb1-8121-4d40-af70-aeff33844c34/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-09-21_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11.21.09.png)
+       <img width="455" alt="3" src="https://github.com/gilyeon00/TIL/assets/52391627/ec4d15d3-0fc9-4e28-b30e-33d2ee067bc1">
     ```java
         @Bean
             public Flow flow() {
