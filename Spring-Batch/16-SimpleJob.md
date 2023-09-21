@@ -26,7 +26,7 @@
       ➡️ 마지막 StepExecution 의 성공 여부는 곧 Job의 성공 여부
 - 맨 마지막에 실행한 Step 의 BatchStatus 가 Job 의 최종 BatchStatus 가 된다.
 
-  ![스크린샷 2023-09-17 오후 11.42.16.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/620a6d8c-eeac-4c90-b691-23b89fd6e153/ac62c3f4-f23c-4ffc-9896-937ba59d95d3/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-09-17_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11.42.16.png)
+  <img width="1062" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/926a5b2c-a6ae-44bf-bc33-c82a0b240c54">
 
 
 ```java
