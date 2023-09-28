@@ -2,7 +2,7 @@
 
 - StepBuilder 를 생성하는 팩토리 클래스로서, get(String name) 메서드 제공
 - StepBuilderFactory.get(”stepName”)
-    - stepName 으로 Step을 생성한다.
+  - stepName 으로 Step을 생성한다.
 
 # StepBuilder
 
@@ -21,11 +21,50 @@
 - chunk ( completionPolicy )
 - TaskletStep 을 생성하며, 내부적으로 청크기반의 작업을 처리하는 ChunkOrientedTasklet 클래스를 생성한다.
 
+    ```java
+    @Bean
+        public Step step2 () {
+            return stepBuilderFactory.get("step2")
+                    .<String, String>chunk(3)
+                    .reader(new ItemReader<String>() {
+                        @Override
+                        public String read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+                            return null;
+                        }
+                    })
+                    .processor(new ItemProcessor<String, String>() {
+                        @Override
+                        public String process(String item) throws Exception {
+                            return null;
+                        }
+                    })
+                    .writer(new ItemWriter<String>() {
+                        @Override
+                        public void write(List<? extends String> items) throws Exception {
+                            
+                        }
+                    })
+                    .build();
+        }
+    ```
+
+
 ### PartitionStepBuilder
 
 - partitioner( stepName, partitioner )
 - partitioner( Step step )
 - PartitionStep 을 생성하며, 멀티 스레드 방식으로 Job 을 실행한다.
+  - step을 여러개로 분리해서, 동시적으로 실행할 수 있는 기능
+
+```java
+@Bean
+    public Step step1 () {
+        return stepBuilderFactory.get("step1")
+                .partitioner(step2())
+                .gridSize(2)
+                .build();
+    }
+```
 
 ### JobStepBuilder
 
