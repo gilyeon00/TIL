@@ -20,6 +20,7 @@
 - `launcher` : Job 을 실행할 JobLauncher 설정한다.
     - .launcher(JobLauncher joblauncher)
 - `parametersExtractor` : Step의 ExecutionContext 를 Job 이 실행되는데 필요한 JobParameters 로 변환
+    - ExecutionContext 에 있는 값을 key 를 통해 가져올 수 있음 
 
     ```java
     .parametersExtractor(new JobParametersExtractor() {
@@ -32,21 +33,40 @@
 
 
 ```java
-@Bean
+    @Bean
 public Job parentJob() {
         return jobBuilderFactory.get("parentJob")
         .start(jobStep(null))
         .next(step2())
         .build();
         }
+
+// ExecutionContext 에 있는 값을 key 를 통해 가져올 수 있음
+private DefaultJobParametersExtractor myJobParametersExtractor() {
+        DefaultJobParametersExtractor extractor = new DefaultJobParametersExtractor();
+        extractor.setKeys(new String[]{"name"});
+        return extractor;
+        }
 @Bean
 public Step jobStep (JobLauncher jobLauncher) {
         return stepBuilderFactory.get("my-jobStep")
         .job(childJob())
         .launcher(jobLauncher)
-        .parametersExtractor(new JobParametersExtractor() {
+//                .parametersExtractor(new JobParametersExtractor() {
+//                    @Override
+//                    public JobParameters getJobParameters(Job job, StepExecution stepExecution) {
+//                        return null;
+//                    }
+//                })
+        .parametersExtractor(myJobParametersExtractor())
+        .listener(new StepExecutionListener() {
 @Override
-public JobParameters getJobParameters(Job job, StepExecution stepExecution) {
+public void beforeStep(StepExecution stepExecution) {
+        stepExecution.getExecutionContext().putString("name", "user1");
+        }
+
+@Override
+public ExitStatus afterStep(StepExecution stepExecution) {
         return null;
         }
         })
@@ -74,4 +94,5 @@ public Step step2 () {
         .tasklet(((contribution, chunkContext) -> RepeatStatus.FINISHED))
         .build();
         }
+
 ```
