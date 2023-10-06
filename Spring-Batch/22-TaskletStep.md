@@ -25,5 +25,4 @@
 
 <img width="971" alt="5" src="https://github.com/gilyeon00/TIL/assets/52391627/1b5c3b81-a9ee-46f6-b67d-514de39d5f54">
 
-![6](https://github.com/gilyeon00/TIL/assets/52391627/cd5028c9-d6b2-4d95-ae65-39f1d86ed2cc)
 ![7](https://github.com/gilyeon00/TIL/assets/52391627/84049281-8637-46e5-9366-2f3ee3503c96)
