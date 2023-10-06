@@ -1,6 +1,6 @@
 # SimpleJob 아키텍처
 
-![스크린샷 2023-09-27 오전 10.29.57.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/620a6d8c-eeac-4c90-b691-23b89fd6e153/dc871ffd-617d-4e11-8c5a-053140ed1379/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-09-27_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_10.29.57.png)
+![4](https://github.com/gilyeon00/TIL/assets/52391627/a4020caa-776e-4ffa-bd2d-6d6f3ab31a82)
 
 ## JobLauncher
 

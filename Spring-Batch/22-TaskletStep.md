@@ -23,4 +23,6 @@
 - 하나의 큰 덩어리를 n개씩 나눠서 실행한다는 의미로, 대량 처리를 하는 경우 효과적으로 설계됨
 - `ItemReader`, `ItemProcessor`, `ItemWriter` 를 사용하며 Chunk 기반 전용 Tasklet 인 ChunkOrientedTasklet 구현체가 제공됨
 
-![스크린샷 2023-09-29 오전 10.39.09.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/620a6d8c-eeac-4c90-b691-23b89fd6e153/c07b62a9-5c91-4237-810b-1c713e229375/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-09-29_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_10.39.09.png)
+<img width="971" alt="5" src="https://github.com/gilyeon00/TIL/assets/52391627/1b5c3b81-a9ee-46f6-b67d-514de39d5f54">
+![6](https://github.com/gilyeon00/TIL/assets/52391627/cd5028c9-d6b2-4d95-ae65-39f1d86ed2cc)
+![7](https://github.com/gilyeon00/TIL/assets/52391627/84049281-8637-46e5-9366-2f3ee3503c96)
