@@ -7,4 +7,20 @@
 - Flow 와 Job 의 흐름을 구성하는 데만 관여하고, 실제 비즈니스 로직은 Step 에서 이뤄진다.
 - 내부적으로 SimpleFlow 객체를 포함하고 있으며, Job 실행 시 호출한다.
 
+```java
+//    step1 이 성공하면 step2 실행
+//    step1 이 실패하면 step3 실행
+    @Bean
+    public Job batchJob() {
+        return jobBuilderFactory.get("batchJob")
+                .start(step1())
+                .on("COMPLETED").to(step2())
+                .from(step1())
+                .on("FAILED").to(step3())
+                .end()
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
+```
+
 ![8](https://github.com/gilyeon00/TIL/assets/52391627/ef9957a2-13f3-4ec2-83b3-be3811b08fce)
