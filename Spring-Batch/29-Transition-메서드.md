@@ -3,7 +3,6 @@
 - Flow 내 Step 의 조건부 전환(전이)을 정의함
 - Job 의 API 설정에서 on(String pattern) 메서드를 호출하면 TransitionBuilder 가 반환되어, Transition Flow 를 구성가능
 - Step 의 종료상태(ExitStatus) 가 어떤 pattern 과도 매칭되지않으면, 스프링 배치에서 예외를 발생하고 해당 Job 은 실패로 종료
-- Transition 은 구체적인 것부터 그렇지 않은 순서로 적용된다.
 
 ```java
 @Bean
@@ -21,7 +20,38 @@
     }
 ```
 
-## .on(String pattern)
+### ⭐️ Transition 은 **구체적인 것부터** 그렇지 않은 순서로 적용된다.
+(순서가 중요한 게 아니다 !)
+
+```java
+@Bean
+    public Job flowJob(){
+        return jobBuilderFactory.get("myFlowJob")
+                .start(myFlow1())
+                    .on("*")
+                    .to(step5())
+                .from(myFlow1())
+                    .on("COMPLETED")
+                    .to(myFlow3())
+                .next(step3())
+                .end()
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
+```
+
+**[ 실행 순서 ]**
+
+Step1 > Step2 > `Step3` > Step4 > Step3
+
+- 순서로 따지자면, *(아스키 문자) 에 걸려서 Step5 가 실행됐어야하지만 ❗️ Transition 은 구체적인 것 부터 적용되기 때문에 `.on("COMPLETED")` 에 걸려서 이걸 먼저 실행하게 된다.
+- 이후, *(아스키 문자) 에 해당하는 조건은 걸리지않고 끝나게 된다.
+
+---
+
+## ✅ Transition 메서드
+
+### .on(String pattern)
 
 - **TransitionBuilder** 변환
 - 해당 Step1 의 StepExecution 의 ExitStatus 값과 일치하면, 그 다음으로 넘어갈 수 있음 (step2)
@@ -40,7 +70,7 @@
 
 - 이전 단계에서 정의한 Transition 을 새롭게 추가 정의한다.
 
-## Job 을 중단하거나, 종료하는 메서드
+## ✅ Job 을 중단하거나, 종료하는 메서드
 
 - Flow 가 실행되면 `FlowExecutionStatus` 에 상태값이 저장되고 최종적으로 Job 의 BatchStatus 와 ExitStatus 에 반영된다.
 - ⭐️ Step 의 BatchStatus 및 ExitStatus 에는 아무런 영향을 주지않고, **Job 의 상태만을 변경**한다.
