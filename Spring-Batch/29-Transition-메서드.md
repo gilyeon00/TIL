@@ -116,3 +116,53 @@ A. Step1 가 FAILED 로 종료되면 Step2 를 실행
   2. Step4 의 종료상태가 FAILED 면 Job 종료
 
 ---
+
+```java
+@Bean
+    public Job batchJob() {
+        return jobBuilderFactory.get("batchJob")
+                .start(step1())
+                    .on("FAILED")
+                    .to(step2())
+                    .on("*")
+                    .stop()
+                .from(step1())
+                    .on("*")
+                    .to(step3())
+                    .next(step4())
+                    .on("FAILED")
+                    .end()
+                .end()
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
+```
+
+1. **Step1 가 FAILED 로 종료되면 Step2 를 실행**
+  1. Step1 강제 FAILED 설정
+
+![1](https://github.com/gilyeon00/TIL/assets/52391627/de1aed3f-37f3-4bbf-b30f-e4cc6781ce85)
+
+![2](https://github.com/gilyeon00/TIL/assets/52391627/706596c0-5d64-4821-84ad-c024a8dff19f)
+
+- Step1 이 FAILED 이므로, start 구문이 실행되고, from 구문은 실행되지 않는다
+- Step1 은 FAILED 이므로, EXIT_CODE 는 FAILED 이다.
+- 하지만, 이것은 의도한대로 나오는 결과이므로 STATUS 는 COMPLETED 이다.
+- start 구문은 stop 구문을 사용했기때문에, 해당 Job 은 STOPPED 로 종료상태가 지정된다.
+
+![3](https://github.com/gilyeon00/TIL/assets/52391627/daafacac-64c1-4ed1-828f-39830d2948f2)
+
+
+1. **Step1 가 FAILED 가 아닌 모든 경우 Step3 을 실행**
+  1. Step1 FAILED 설정 제거, Step4 강제 FAILED 설정
+
+![4](https://github.com/gilyeon00/TIL/assets/52391627/2b26adae-ec2a-4816-a0f2-4618b2d4c249)
+
+![5](https://github.com/gilyeon00/TIL/assets/52391627/0372427b-9b18-4701-9dcd-c02b0f7b17be)
+
+- Step1 이 COMPLETED 이므로, start 구문이 실행되지않고, from 구문이 실행된다.
+- Step4 는 FAILED 이므로, EXIT_CODE 는 FAILED 이다. 마찬가지로, 의도된 결과여서 STATUS 는 COMPLETED 이다.
+- from 구문은 stop 을 설정해주지 않았기때문에, 해당 Job 은 COMPLETED 로 종료상태가 저장된다.
+  - 이 Job 두번 다신 재실행하지 못한다.
+
+![6](https://github.com/gilyeon00/TIL/assets/52391627/c1a2d0b7-08f7-4c9e-9e2a-f9f98b86d942)
