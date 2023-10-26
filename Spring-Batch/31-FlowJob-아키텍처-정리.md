@@ -30,3 +30,43 @@
     - State ▶️ SimpleFlow
 
 ![1](https://github.com/gilyeon00/TIL/assets/52391627/f7cb4057-206a-412e-a8fe-c1ec871240bd)
+---
+---
+
+## Job
+
+- Flow 는 start() 에만 들어갈 수 있다.
+  - start()에 Step 이 들어갈 경우, next() 에 Flow 는 들어갈 수 없다.
+  - start(Step step) ➡️ SimpleJobBuilder
+    - SimpleJobBuilder 는 Step 만 가능
+  - start(Flow flow) ➡️ JobFlowBuilder
+    - JobFlowBuilder 는 Flow / Step 둘 다 가능
+    - [JobBuilderFactory](https://www.notion.so/JobBuilderFactory-678bd63cfd1349639d118f7bdcf66756?pvs=21)
+
+```java
+ 		@Bean
+    public Job myjob(){
+        return jobBuilderFactory.get("myFlow")
+                .start(myFlow())
+                .next(step3())
+                .end()
+                .build();
+    }
+```
+
+## SimpleFlow
+
+- Flow 는 FlowBuilder 를 통해서 만들 수 있다.
+
+```java
+
+    @Bean
+    public Flow myFlow(){
+        FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("myFlow");
+        flowBuilder.start(step1())
+                .next(step2())
+                .end();
+
+        return flowBuilder.build();
+    }
+```
