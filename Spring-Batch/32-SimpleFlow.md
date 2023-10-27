@@ -30,6 +30,15 @@
     }
 ```
 
+## StateTransition
+
+: Flow 의 API 설정 및 Transition 에 따라 State 객체를 생성하고, StateTransition 의 속성에 저장한다.
+
+- 우리가 생성하고 저장한 State 값을 알기 위해, SimpleFlow에서 참조하는 클래스
+- State state : 현재 State
+- String pattern : on() Transition에서 받는 그 패턴 값
+- String next : 다음 State
+
 ---
 
 ## 실습 😼
@@ -40,52 +49,53 @@
     - Flow 2
   - Flow 1 ▶️실패
     - Flow 3
+- 만약에 step1 이 실패로 끝난다면?
 
 <img width="173" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/22471ab2-b2e3-4a66-a4f5-2357ef5a8bd6">
 
 ```java
 @Bean
-    public Job flowJob(){
+public Job flowJob(){
         return jobBuilderFactory.get("myFlowJob")
-                .start(myFlow1())
-                    .on("COMPLETED")
-                    .to(myFlow2())
-                .from(myFlow1())
-                    .on("FAILED")
-                    .to(myFlow3())
-                .next(step3())
-                .end()
-                .build();
-    }
+        .start(myFlow1())
+        .on("COMPLETED")
+        .to(myFlow2())
+        .from(myFlow1())
+        .on("FAILED")
+        .to(myFlow3())
+        .next(step3())
+        .end()
+        .build();
+        }
 
-    @Bean
-    public Flow myFlow1(){
+@Bean
+public Flow myFlow1(){
         FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("myFlow");
         flowBuilder.start(step1())
-                .next(step2())
-                .end();
+        .next(step2())
+        .end();
 
         return flowBuilder.build();
-    }
+        }
 
-    @Bean
-    public Flow myFlow2(){
+@Bean
+public Flow myFlow2(){
         FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("myFlow2");
         flowBuilder.start(myFlow3())
-                .next(step5())
-								.next(step6())
-                .end();
+        .next(step5())
+        .next(step6())
+        .end();
 
         return flowBuilder.build();
-    }
+        }
 
-    @Bean
-    public Flow myFlow3(){
+@Bean
+public Flow myFlow3(){
         FlowBuilder<Flow> flowBuilder = new FlowBuilder<>("myFlow2");
         flowBuilder.start(step3())
-                .next(step4())
-                .end();
+        .next(step4())
+        .end();
 
         return flowBuilder.build();
-    }
+        }
 ```
