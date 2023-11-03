@@ -37,11 +37,11 @@
 
 - Flow 는 start() 에만 들어갈 수 있다.
   - start()에 Step 이 들어갈 경우, next() 에 Flow 는 들어갈 수 없다.
-  - start(Step step) ➡️ SimpleJobBuilder
+  - start(Step step) ➡️ SimpleJobBuilder
     - SimpleJobBuilder 는 Step 만 가능
-  - start(Flow flow) ➡️ JobFlowBuilder
+  - start(Flow flow) ➡️ JobFlowBuilder
     - JobFlowBuilder 는 Flow / Step 둘 다 가능
-    - [JobBuilderFactory](https://www.notion.so/JobBuilderFactory-678bd63cfd1349639d118f7bdcf66756?pvs=21)
+    - [JobBuilderFactory](https://github.com/gilyeon00/TIL/blob/main/Spring-Batch/15-JobBuilderFactory.md)
 
 ```java
  		@Bean
