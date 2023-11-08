@@ -18,3 +18,18 @@
 4. ChunkProcessor 는 `ItemWriter` 에게 가공한 아이템들을 **List** 에 담아서 전달한다. (커밋)
 
 위의 1~4 단계는 한 트랜잭션 내에 있다.
+
+---
+
+Chunk 는 TaskletStep 에서 사용한다.
+고로, StepBuilderFactory > StepBuilder > SimpleStepBuilder > TaskletStep 과정을 거친다.
+
+<img width="1041" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/b1f396cd-3f74-4ccc-98d5-7ddf2e949897">
+
+- **<I, O>chunk(10)**
+    - **<I, O> :** <Input Type, Output Type>
+    - Commit interval : 커밋 주기
+    - 10 : 10개만큼 Item 을 읽으면, Processor 로 넘겨준다.
+- **CompletionPolicy** : 이 클래스에 설정한 어떤 조건에 부합하면 Processor 로 넘겨준다.
+- **stream()** : 내부적으로 ExecutionContext 를 가지고 현재 ItemStream 에 관련된 내용들을 만들고, 조회하는 역할
+- **build()** : SimpleStepBuilder 가 생성된다. (tasklet 은 TaskletStepBuilder)
