@@ -8,3 +8,10 @@
     - ItemReader 가 읽은 item 이 null 일 경우, 반복문 종료 및 해당 Step 반복문까지 종료
 - 기본 구현체로서 Simpl**e**ChunkProvider 와 FaultTolerantChunkProvider 가 있다.
     - FaultTolerantChunkProvider : item 읽을때 오류가 생기면 Skip 하거나 재시도를 하게끔하는 객체
+
+# ChunkProcessor
+
+- ItemProcessor 를 사용해서 Item 을 변형, 가공, 필터링하고 ItemWriter 를 사용해서 Chunk 데이터를 저장/출력  한다.
+- Chunk<O> (Chunk output 용 객체) 를 만들고 앞에서 넘어온 Chunk<I> 의 item 을 한 건씩 처리한 후 Chunk<O> 에 저장한다.
+- 외부로부터 ChunkProcessor 가 호출될 때마다 항상 새로운 Chunk 가 생성된다.
+- ItemProcessor 는 설정 시 선택사항으로서, 만약 객체가 존재하지 않을 경우 ItemReader 에서 읽은 item 그대로 Chunk<O> 에 저장된다.
