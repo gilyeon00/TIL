@@ -34,3 +34,22 @@
 - <O> 제네릭은 ItemWriter 에서 보낼 데이터 타입을 지정한다
 - 아이템 하나씩 가공 처리하며, null을 리턴할 경우 해당 아이템은 Chunk<O> 에 저장되지 않는다.
   - ItemWriter 에게 리턴하지 않는다
+
+# ItemWriter
+
+- Chunk 단위로 데이터를 받아 일괄 출력 작업을 위한 인터페이스
+  - Flat(플랫) 파일 - csv, txt (고정 위치로 정의된 데이터 필드나 특수문자오 구별된 데이터의 행)
+  - XML, JSON
+  - Database
+  - JMS(Java Message Service), RabbitMQ, 카프카(kafka) 와 같은 Message Queuing 서비스
+  - Custom Writer
+- 아이템 리스트를 전달 받는다. ( 아이템 하나 X )
+- **ChunkOrientedTasklet 실행 시 필수적 요소로 설정**해야한다.
+- 보통 ItemReader 구현체와 1:1 대응 관계인 구현체들로 구성되어있다.
+
+### write(List<? extents T> items)
+
+- 출력 데이터를 아이템 리스트로 받아 처리한다.
+- 출력이 완료되고 트랜잭션이 종료되면, 새로운 Chunk 단위 프로세스로 이동한다.
+
+![IMG_DB5E23087416-1](https://github.com/gilyeon00/TIL/assets/52391627/541a09e6-f5d3-45bb-9225-a28d88642696)
