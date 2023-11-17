@@ -53,3 +53,76 @@
 - 출력이 완료되고 트랜잭션이 종료되면, 새로운 Chunk 단위 프로세스로 이동한다.
 
 ![IMG_DB5E23087416-1](https://github.com/gilyeon00/TIL/assets/52391627/541a09e6-f5d3-45bb-9225-a28d88642696)
+
+---
+---
+
+```java
+@Bean
+    public Step step1 () {
+        return stepBuilderFactory.get("step1")
+                .<Customer, Customer>chunk(3)
+                .reader(itemReader())
+                .processor(itemProcessor())
+                .writer(itemWriter())
+                .build();
+    }
+    private ItemReader<Customer> itemReader() {
+        return new CustomItemReader(Arrays.asList(new Customer("user1"),
+                new Customer("user2"),
+                new Customer("user3")));
+    }
+
+    private ItemProcessor<? super Customer, ? extends Customer> itemProcessor() {
+        return new CustomItemProcessor();
+    }
+
+    private ItemWriter<? super Customer> itemWriter() {
+        return new CustomItemWriter();
+    }
+```
+
+### ItemReader
+
+```java
+public class CustomItemReader implements ItemReader<Customer> {
+
+    private List<Customer> customerList;
+    public CustomItemReader(List<Customer> list){
+        this.customerList = new ArrayList<>(list);
+    }
+
+    @Override
+    public Customer read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+        if(!customerList.isEmpty()){
+            return customerList.remove(0);
+        }
+        return null;
+    }
+}
+```
+
+### ItemProcessor
+
+```java
+public class CustomItemProcessor implements ItemProcessor<Customer, Customer> {
+
+    @Override
+    public Customer process(Customer customer) throws Exception {
+        customer.setName(customer.getName().toUpperCase());
+        return customer;
+    }
+}
+```
+
+### ItemWriter
+
+```java
+public class CustomItemWriter implements ItemWriter<Customer> {
+
+    @Override
+    public void write(List<? extends Customer> list) throws Exception {
+        list.forEach(item -> System.out.println(item));
+    }
+}
+```
