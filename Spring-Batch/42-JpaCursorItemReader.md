@@ -7,7 +7,9 @@
 
 <img width="715" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/793d4ad9-de7d-4794-a3fd-55955fa8df82">
 
-### ✈️ JpaCursorItemReader 가 데이터를 읽기 전에, ItemStream 에서 하는 일 !
+---
+
+## ✈️ JpaCursorItemReader 가 데이터를 읽기 전에, ItemStream 에서 하는 일 !
 
 1. Step 은 ItemStream 의 open() 을 통해 EntityManager 를 만든다
 2. EntityManager 를 생성하면, 우리가 설정한 JPQL 을 통해서 query 문을 생성하게 된다
@@ -30,4 +32,20 @@
 - 자바에서 제공하는 자료구조들의 인터페이스로 List, ArrayList, Stack, Quque, LinkedList 등이 이를 상속받고있다
 - 즉, 이러한 컬렉션 인터페이스를 상속받는 클래스들에 대해 Iterator 인터페이스 사용 가능하다
 
-<img width="767" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/049f35d2-7f05-4ae6-a6da-69097531f048">
+<img width="690" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/049f35d2-7f05-4ae6-a6da-69097531f048">
+
+---
+
+## 🎃 JpaCursorItemReader 에서 하는 일
+
+1. ResultStream 에게 데이터를 읽어오라한다 doRead()
+2. ItemStream 의 open() 를 통해 이미 받아온 ResultStream 은 내부적으로 List 를 가지고 있다.
+3. 이 List 는 Stream 으로 뽑아낼 수 있다. ➡️ Iterator 의 next() 를 통해 데이터를 1개씩 끌어온다.
+
+⭐️ 결국 가져오는건 직접 DB로 부터 가져오는 것이 아니다. 이미 연결해서 가져온 데이터가 있는 상태이다.
+
+▶️ Iterator 로부터 데이터를 하나씩 가져와서 전달을 하므로 Streaming 방식이다 ! (이는 ChunkSize 만큼만 반복한다.) 
+
+### ✅ JdbcCursorItemReader 와 다른점
+
+- ResultSet 으로 next 할 때마다, DB 와 연동을 해서 DB에서 레코드를 하나씩 가져와서 object 로 변환한다.
