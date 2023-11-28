@@ -49,3 +49,31 @@
 ### ✅ JdbcCursorItemReader 와 다른점
 
 - ResultSet 으로 next 할 때마다, DB 와 연동을 해서 DB에서 레코드를 하나씩 가져와서 object 로 변환한다.
+
+---
+
+### 🗑️Chunk Size 만큼 더이상 불러올 데이터가 없다면?
+
+1. ItemStream 의 close() 호출
+2. EntityManager 를 close 함으로써, 자원을 종료한다.
+
+---
+
+```java
+@Bean
+    public ItemReader<? extends Member> customItemReader() {
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("firstName", "A%");
+
+        return new JpaCursorItemReaderBuilder<Member>()
+                .name("jpaCursorItemReader")
+                .entityManagerFactory(entityManagerFactory)
+                .queryString("select m from Member m where firstName like :firstName")
+                .parameterValues(parameters)
+                .build();
+    }
+```
+
+- `queryString()` : JPQL 을 통해, 내가 원하고자 하는 데이터를 뽑는 Query 를 작성한다.
+- `parameterValues()` : Key-Value 값의 HashMap 을 인자로 넣어준다.
+  - 이때, Key 는 JPQL 에서 바인딩할 이름하고 동일한 이름 / Value 는 바인딩에 들어갈 값이 들어가면 된다.
