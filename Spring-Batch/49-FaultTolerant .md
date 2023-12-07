@@ -13,3 +13,5 @@
 - ItemProcessor / ItemWriter 에 적용할 수 있다.
 
 <img width="1117" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/422496e4-9350-43fb-bc60-0ffe9b81d220">
+
+<img width="1171" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/fcc43833-38e4-462b-b2a2-8463cce043a3">
