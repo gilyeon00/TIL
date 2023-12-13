@@ -15,9 +15,10 @@
 
 - Chunk 관련 작업을 하다, 예외가 발생할 경우 SkipPolicy 가 그 예외에 대해서 Skip 할 건지 말 선지 Skip 정책을 통해서 검사한다.
 
-### Skip 가능 여부를 판별하는 기준
+### [Skip 가능 여부를 판별하는 기준](https://github.com/gilyeon00/TIL/blob/main/Spring-Batch/03-Job.md)
 
 - Skip 대상에 포함된 예외인지 여부
 - Skip counter 를 초과했는지 여부
+    - 무한대로 Skip 하는게 아니라, limit, counter 를 정할 수 있다
 
 ![1](https://github.com/gilyeon00/TIL/assets/52391627/2030b3f4-e8ac-4c71-bc2a-7f10503f514d)
