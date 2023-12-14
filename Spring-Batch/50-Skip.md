@@ -22,3 +22,14 @@
     - 무한대로 Skip 하는게 아니라, limit, counter 를 정할 수 있다
 
 ![1](https://github.com/gilyeon00/TIL/assets/52391627/2030b3f4-e8ac-4c71-bc2a-7f10503f514d)
+
+### SkipPolicy
+
+- Skip 정책에 따라 **아이템의 Skip 여부를 판단하는 클래스**
+- 스프링 배치가 기본적으로 제공하는 SkipPolicy 구현체들이 있으며, 필요 시 직접 생성해서 사용가능
+  - 기본적으로는 `LimitCheckingItemSkipPolicy` 구현체를 사용한다.
+- 내부적으로 Classfier 클래스들을 활용한다.
+- 반환값이 true 이면 Skip 한다
+
+![1](https://github.com/gilyeon00/TIL/assets/52391627/84032e0b-8021-482e-8dc4-95f1f356a465)
+
