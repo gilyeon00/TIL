@@ -33,3 +33,35 @@
 
 ![1](https://github.com/gilyeon00/TIL/assets/52391627/84032e0b-8021-482e-8dc4-95f1f356a465)
 
+## 📌 사용 방법에 따른 예제
+
+```sql
+@Bean
+    public Step step1() {
+        return stepBuilderFactory.get("step1")
+                .<String, String>chunk(5)
+                .reader(new ItemReader<String>() {
+                    int i = 0;
+
+                    @Override
+                    public String read() {
+                        i++;
+                        if (i == 3) {
+                            throw new IllegalArgumentException("skip test");
+                        }
+                        return i > 20 ? null : String.valueOf(i);
+                    }
+                })
+                .processor(itemProcessor())
+                .writer(itemWriter())
+                **.faultTolerant()
+                .skip(SkippableException.class) // 예외 클래스 타입을 지정해야한다.
+                .skipLimit(3)
+                .build();**
+    }
+```
+
+- skip() : 예외 발생 시에 Skip 할 예외 타입 설정
+- skipLimit() : Skip 제한 횟수 설정 (ItemReader, ItemProcessor, ItemWriter 횟수 합)
+- skipPolicy() : Skip 을 어떤 조선과 기준으로 적용 할 것인지 정책 설정
+- noSkip() : 예외 발생 시 Skip 하지 않을 예외 타입 설정
