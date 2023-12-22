@@ -52,3 +52,31 @@ NoSQL은 점점 빅데이터의 등장으로 인해 데이터와 트래픽이 �
     4. JSON 데이터 구조를 사용하는 애플리케이션
 
     5. 비정규화된 중첩 구조의 데이터를 사용하는 애플리케이션
+
+## 📌 Wide Column Database (= ****Column Family Database)
+`좀더 공부하기`**
+
+<img width="743" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/1a68676b-5fe1-4218-8f4d-e3d1117bbc21">
+
+- 컬럼 패밀리 데이터베이스는 대용량 데이터, 읽기와 쓰기 성능, 고가용성을 위해 설계됨
+- Column과 Row와 같이 Relation Database와 동일한 용어를 사용하여 스키마를 정의
+- 컬럼 수가 많다면 관련된 컬럼들을 컬렉션으로 묶을 수 있다.
+- 예를 들어 이름의 성과 이름을 하나로 묶고, 사무실, 핸드폰 등의 전화번호들을 하나로 묶을 수 있다. 이렇게 묶인 컬럼들을 **Column Family**
+
+  <img width="681" alt="2" src="https://github.com/gilyeon00/TIL/assets/52391627/18baeb44-b97b-4948-be64-822b52ce0540">
+
+- Column-family Model 기반의 Database이며 이전의 모델들이 Key-Value 값을 이용해 필드를 결정했다면, 특이하게도 이 모델은 **키에서 필드를 결정**한다.
+- 키는 Row(키 값)와 Column-family, Column-name을 가진다. 연관된 데이터들은 같은 Column-family 안에 속해 있으며, 각자의 Column-name을 가진다.
+- 관계형 모델로 설명하자면 어트리뷰트가 계층적인 구조를 가지고 있는 셈이다. 이렇게 저장된 데이터는 하나의 커다란 테이블로 표현이 가능하며, 질의는 Row, Column-family, Column-name을 통해 수행된다.
+- 대표적인 NoSQL Column-family Model로는 `HBase`, `Cassandra`**,** Hypertable 등이 있다.
+- 주로 다음 경우에 사용
+
+    1. 데이터베이스에 쓰기 작업이 많은 애플리케이션
+
+    2. 지리적으로 여러 데이터 센터에 분산되어 있는 애플리케이션
+
+    3. 복제본 데이터가 단기적으로 불일치하더라도 큰 문제가 없는 애플리케이션
+
+    4. 동적 필드를 처리하는 애플리케이션
+
+    5. 수백만 테라바이트 정도의 대용량 데이터를 처리할 수 있는 애플리케이션
