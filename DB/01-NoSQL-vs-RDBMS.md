@@ -80,3 +80,29 @@ NoSQL은 점점 빅데이터의 등장으로 인해 데이터와 트래픽이 �
     4. 동적 필드를 처리하는 애플리케이션
 
     5. 수백만 테라바이트 정도의 대용량 데이터를 처리할 수 있는 애플리케이션
+
+### **HBase** : Hadoop의 HDFS를 저장소로 사용함.
+
+- Master-Slave 구조 : **Master가 데이터 일관성을 보장**
+
+- Master가 장애 발생시 접근 불가 → HA 구성으로 해결
+
+- 1개 node에 쓰기가 집중되는 현상(hot spot) 발생 ☞ 쓰기성능 ↓
+
+- hotspot을 해결하기 위한 작업때문에 performance가 또 떨어짐
+
+- raw key로 정렬 가능
+
+### **Cassandra** : Ring 구조의 Multi Master 복제 지원
+
+- **모든 노드가 동일한 역할 수행** : 일관성의 문제 발생 가능성
+
+- 확장성은 대단히 뛰어남
+
+- 쓰기성능 ↑
+
+- equal query 성능 매우 좋음.
+
+- raw key로 정렬 불가능.
+
+- Netflix에서는 file을 쪼개서 binary형태로 cassandra에 저장하여 효과적으로 사용.
