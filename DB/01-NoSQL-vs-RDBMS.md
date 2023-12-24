@@ -53,8 +53,8 @@ NoSQL은 점점 빅데이터의 등장으로 인해 데이터와 트래픽이 �
 
     5. 비정규화된 중첩 구조의 데이터를 사용하는 애플리케이션
 
-## 📌 Wide Column Database (= ****Column Family Database)
-`좀더 공부하기`**
+## 📌 Wide Column Database (= Column Family Database)
+`좀더 공부하기`
 
 <img width="743" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/1a68676b-5fe1-4218-8f4d-e3d1117bbc21">
 
@@ -68,7 +68,7 @@ NoSQL은 점점 빅데이터의 등장으로 인해 데이터와 트래픽이 �
 - Column-family Model 기반의 Database이며 이전의 모델들이 Key-Value 값을 이용해 필드를 결정했다면, 특이하게도 이 모델은 **키에서 필드를 결정**한다.
 - 키는 Row(키 값)와 Column-family, Column-name을 가진다. 연관된 데이터들은 같은 Column-family 안에 속해 있으며, 각자의 Column-name을 가진다.
 - 관계형 모델로 설명하자면 어트리뷰트가 계층적인 구조를 가지고 있는 셈이다. 이렇게 저장된 데이터는 하나의 커다란 테이블로 표현이 가능하며, 질의는 Row, Column-family, Column-name을 통해 수행된다.
-- 대표적인 NoSQL Column-family Model로는 `HBase`, `Cassandra`**,** Hypertable 등이 있다.
+- 대표적인 NoSQL Column-family Model로는 `HBase`, `Cassandra`**,** Hypertable 등이 있다.
 - 주로 다음 경우에 사용
 
     1. 데이터베이스에 쓰기 작업이 많은 애플리케이션
@@ -85,9 +85,9 @@ NoSQL은 점점 빅데이터의 등장으로 인해 데이터와 트래픽이 �
 
 - Master-Slave 구조 : **Master가 데이터 일관성을 보장**
 
-- Master가 장애 발생시 접근 불가 → HA 구성으로 해결
+- Master가 장애 발생시 접근 불가 → HA 구성으로 해결
 
-- 1개 node에 쓰기가 집중되는 현상(hot spot) 발생 ☞ 쓰기성능 ↓
+- 1개 node에 쓰기가 집중되는 현상(hot spot) 발생 ☞ 쓰기성능 ↓
 
 - hotspot을 해결하기 위한 작업때문에 performance가 또 떨어짐
 
@@ -99,10 +99,33 @@ NoSQL은 점점 빅데이터의 등장으로 인해 데이터와 트래픽이 �
 
 - 확장성은 대단히 뛰어남
 
-- 쓰기성능 ↑
+- 쓰기성능 ↑
 
 - equal query 성능 매우 좋음.
 
 - raw key로 정렬 불가능.
 
 - Netflix에서는 file을 쪼개서 binary형태로 cassandra에 저장하여 효과적으로 사용.
+
+
+## 📌 Graph Database
+
+**그래프 데이터베이스**(GDB)는 데이터를 그래프(노드, 에지)로 저장하고 표현하는 데이터베이스
+
+<img width="756" alt="3" src="https://github.com/gilyeon00/TIL/assets/52391627/aad12eb7-a7a8-4056-96c0-d62464f6fe04">
+
+- Graph Model Model에서는 데이터를 Node와 Edge, Property와 함께 그래프 구조를 사용하여 데이터를 표현하고 저장하는 Database입니다. **개체와 관계를 그래프 형태로 표현**한 것이므로 관계형 모델이라고 할 수 있으며,
+  데이터 간의 관계가 탐색의 키일 경우에 적합하다
+  페이스북이나 트위터 같은 소셜 네트워크에서(내 친구의 친구를 찾는 질의 등) 적합하고, 연관된 데이터를 추천해주는 추천 엔진이나 패턴 인식 등의 데이터베이스로도 적합하다.
+- 대표적인 NoSQL Graph Model로는 `Neo4J`가 있다.
+
+  <img width="874" alt="4" src="https://github.com/gilyeon00/TIL/assets/52391627/62fb27b9-54e8-42c1-aac9-8002ad5b37bb">
+
+
+---
+
+## Ref
+
+[[NoSQL 데이터베이스별 특징]](https://jaemunbro.medium.com/nosql-데이터베이스-특성-비교-c9abe1b2838c)
+
+[데이터 분석 결과를 효과적으로 제공하기 위한 그래프 데이터베이스 구축](https://d2.naver.com/helloworld/8446520)
