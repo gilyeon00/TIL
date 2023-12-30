@@ -75,3 +75,46 @@ Code : 실행 명령을 포함하는 코드
 Data : Static 변수 혹은 Global 변수
 Heap : 동적 메모리 영역
 Stack : 지역변수, 매개변수, 반환값 등 일시적인 데이터
+
+# 📌 Context Switching
+
+: 현재 진행하고있는 Task(Process, Thread)의 상태를 저장하고 다음 Task의 상태값을 읽어 적용하는 과정
+
+### 😲 왜 Context Switching이 필요할까?
+
+- 컴퓨터가 매번 하나의 Task만 처리할 수 있다면..
+  해당 Task가 끝날때까지 다음 Task는 기다릴 수 밖에 없음
+  → 반응 속도가 느리고 사용하기 불편함
+- 그럼 많은 사용자가 동시에 사용하기 위해서는?
+  multitasking이 가능해야함
+  빠른 속도로 Task를 바꿔가며 실행 →겉으로 볼때는 실시간으로 보이는 장점
+  **CPU가 Task를 바꿔가며 실행하기위해**는 Context Switching이 필요
+
+### 😲 어떻게 Context Switching이 진행될까?
+
+- Task의 대부분 정보는 Register에 저장되고, PCB(Process Control Block)으로 관리됨
+- 현재 실행하고 있는 Task의 PCB정보를 저장하게 됨
+- 다음 실행할 Task의 PCB정보를 읽어 Register에 적재하면, CPU가 이전에 진행했던 과정을 연속적으로 수행할 수 있음
+
+## 멀티스레드 Multi-Thread
+
+: 다수의 스레드를 이용하여 하나의 프로그램을 동시에 처리하는것
+
+멀티프로세스와는 달리 하나의 프로세스 자체에 다수의 실행단위(Thread)가 존재해, 작업 수행에 필요한 자원들을 공유 →자원의 생성과 관리가 중복되는 것을 막음
+
+# 📌 멀티프로세스 vs 멀티스레드
+
+공통점 : 둘 다 처리방식의 일종임 (ex 한 어플리케이션에 대한 처리방식)
+
+여러개의 창 띄워놓는 것 ≠ 멀티프로세스
+
+<img width="494" alt="1" src="https://github.com/gilyeon00/TIL/assets/52391627/db36bb37-566f-4bb7-96f3-68ea137c7ce1">
+
+Multi - process
+
+부모 프로세스에서 자식 프로세스를 여러개 만들어서 (`fork()`) 일을 처리하게됨
+
+
+
+---
+ps.. 2023년 12월 31일이네요. 2023년 마지막 Today I learned 입니다 ✨❤️
