@@ -22,3 +22,28 @@ testImplementation 'org.springframework.batch:spring-batch-test:4.2.2.RELEASE'
     - @StepScope 컨텍스트를 생성해주며, 해당 컨텍스트를 통해 JobParameter 등을 단위 테스트에서 DI 받을 수 있다.
 - **JobScopeTestExecutionListener**
     - @JobScope 컨텍스트를 생성해주며, 해당 컨텍스트를 통해 JobParameter 등을 단위 테스트에서 DI 받을 수 있다.
+
+## @SpringBootTest(classes={..})
+
+: Job 설정 클래스 지정 / 통합 테스트를 위한 여러 의존성 Bean 을 주입 받기 위한 어노테이션
+
+---
+
+```java
+@RunWith(SpringRunner.class)
+@SpringBatchTest
+@SpringBootTest(classes = {JobConfigurationTest.class, TestBatchConfig.class})
+class JobConfigurationTest {
+
+}
+```
+
+```java
+@Configuration
+@EnableAutoConfiguration
+@EnableBatchProcessing
+public class TestBatchConfig {
+    
+    
+}
+```
