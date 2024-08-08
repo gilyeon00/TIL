@@ -1,5 +1,4 @@
 # TIL
-### 1일 1Commit : 2023.08.13 ~ ing 🫧
 
 ---
 ## Spring Batch
